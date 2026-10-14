@@ -70,6 +70,15 @@ void generateDigest(struct Digest* digest, struct User* User) {
     digest->hash3 = result[3];
     digest->hash4 = result[4];
 }
+/*void generateDigest(struct Digest* digest, struct User* user) {
+    uint32_t r = SSHA2((const char*)user, STRUCT_SIZE);
+	digest->hash0 = r & 0xFF;
+	digest->hash1 = (r >> 8) & 0xFF;
+	digest->hash2 = (r >> 16) & 0xFF;
+	digest->hash3 = (r >> 24) & 0xFF;
+    digest->hash4 = 0;
+}
+*/
 void verify(struct User* curr) {
     int height = 2;
 

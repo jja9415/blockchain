@@ -33,6 +33,37 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
     return digest;
 }
 
+uint32_t SSHA2(const char* msg, size_t len) {
+    uint32_t A = 0x67452301;
+	uint32_t B = 0xEFCDAB89;
+	uint32_t C = 0x98BADCFE;
+	uint32_t D = 0x10325476;
+	uint32_t E = 0xC3D2E1F0;
+
+    for (size_t i = 0; i < len; i++) {
+        uint32_t msg_byte = (uint8_t)msg[i];
+        uint32_t shift_a2 = A >> 2;
+		uint32_t shift_b1 = B >> 1;
+
+        uint32_t bit_and1 = B & C;
+		uint32_t bit_and2 = C & D; 
+		uint32_t bit_or = bit_and1 | bit_and2;
+		uint32_t bit_xor = shift_a2 ^ shift_b1;
+
+		uint32_t next_A = E;
+		uint32_t next_B = A;
+        uint32_t next_C = shift_b1 + E;
+		uint32_t next_D = bit_xor;
+        uint32_t next_E = bit_or + msg_byte + bit_xor;
+
+        A = next_A;
+		B = next_B;
+		C = next_C;
+		D = next_D;
+		E = next_E;
+    }
+	return A ^ B ^ C ^ D ^ E;
+}
 
 int digest_equal(struct Digest digest1, struct Digest digest2) {
     return ((digest1.hash0 == digest2.hash0) &&

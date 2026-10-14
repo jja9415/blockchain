@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 struct Digest {
 	unsigned char hash0, hash1, hash2, hash3, hash4;
@@ -11,5 +12,6 @@ struct Digest {
 
 //unsigned char* toString(struct Block* blk);
 unsigned char* SSHA(const unsigned char* str, size_t size);
+uint32_t SSHA2(const char* msg, size_t len);
 int digest_equal(struct Digest digest1, struct Digest digest2);
 void printDigest(struct Digest digest);
